@@ -1,0 +1,116 @@
+{
+  "name": "spendpoint",
+  "version": "1.0.0",
+  "description": "Record receipts and ask what you spent. Spendpoint keeps an exact, private expense ledger through the assistant you already use.",
+  "author": {
+    "name": "Spendpoint",
+    "email": "support@spendpoint.ai",
+    "url": "https://spendpoint.ai"
+  },
+  "homepage": "https://spendpoint.ai",
+  "license": "proprietary",
+  "keywords": [
+    "expenses",
+    "receipts",
+    "budget",
+    "ledger",
+    "finance"
+  ],
+  "skills": [
+    "./skills/spendpoint"
+  ],
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/spendpoint/SKILL.md",
+      "review": {
+        "commerce": false,
+        "demo_recording_url": "REPLACE-WITH-THE-VIDEO-LINK",
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Record a grocery receipt from a photo",
+              "prompt": "Here is my Carrefour receipt. Log it in Spendpoint.",
+              "tools_triggered": "capture_receipt",
+              "expected_behavior": "ChatGPT reads merchant, date, total, VAT and every line from the image, calls capture_receipt once with a verbatim transcription, and reads back what was recorded. The server refuses lines that do not add up to the total."
+            },
+            {
+              "description": "Spending report by category",
+              "prompt": "How much did I spend on groceries in October, and which shop got most of it?",
+              "tools_triggered": "report",
+              "expected_behavior": "ChatGPT calls report grouped by category for October, then by merchant, and answers with the service's sums per currency without adding numbers itself."
+            },
+            {
+              "description": "Find and show an entry",
+              "prompt": "Show me the taxi receipt from the 20th of October.",
+              "tools_triggered": "list_expenses, get_expense",
+              "expected_behavior": "ChatGPT lists entries for that date, fetches the Careem entry in full, and shows its line and transcription."
+            },
+            {
+              "description": "Amend an entry",
+              "prompt": "The Starbucks coffee on the 22nd was for a client meeting, not a personal meal. Change its category to other and note that it was a client meeting.",
+              "tools_triggered": "list_expenses, amend_expense",
+              "expected_behavior": "ChatGPT finds the entry and calls amend_expense with the complete corrected receipt. The original stays, retired and linked to the replacement; ChatGPT confirms the new entry."
+            },
+            {
+              "description": "Export the ledger",
+              "prompt": "Export my whole ledger as CSV.",
+              "tools_triggered": "export_ledger",
+              "expected_behavior": "ChatGPT calls export_ledger with format csv and gives the user the CSV content as a file."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Duplicate receipt is not recorded twice",
+              "prompt": "Log this receipt. (the same Carrefour receipt already recorded)",
+              "expected_behavior": "capture_receipt answers possible_duplicate. ChatGPT asks the user whether it is a separate purchase and does not resend with confirm_duplicate unless told so."
+            },
+            {
+              "description": "Illegible total is not guessed",
+              "prompt": "Log this receipt. (a photo where the total is unreadable)",
+              "expected_behavior": "ChatGPT asks the user for the total instead of guessing or inventing lines; no capture_receipt call is made with an invented amount."
+            },
+            {
+              "description": "No account action through tools",
+              "prompt": "Delete my Spendpoint account.",
+              "expected_behavior": "There is no tool for this. ChatGPT explains that deleting the account is done on https://spendpoint.ai/account with the email address and password, and calls nothing."
+            }
+          ]
+        }
+      },
+      "publication": {
+        "countries": [],
+        "release_notes": "First release: receipt capture with line items and duplicate guard, amend and void, reports, export, categories, connections."
+      }
+    }
+  },
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Spendpoint",
+    "shortDescription": "Receipts in, answers out.",
+    "longDescription": "Spendpoint keeps your expenses through the assistant you already use. Show ChatGPT a receipt and say \"log this\": the receipt is recorded with every line, in its own currency, with the transcription kept as evidence. Then ask what you spent, by category, merchant or month, and the sums come from the service, never from the assistant's arithmetic.\n\nWhat it does\n- Records receipts exactly as printed: merchant, date, total, VAT, each line with its quantity and amount. Lines must add up to the total before anything is stored.\n- Catches likely duplicates and asks before recording a second copy.\n- Corrects without erasing: an amendment keeps the original and links the corrected entry; a void keeps the record and removes it from the ledger.\n- Reports by category, merchant or month, per currency, over any date range.\n- Exports everything as JSON or CSV whenever you like.\n- Keeps your own category list, started from a standard set of seventeen.\n- Shows which assistants are connected to your account and lets you disconnect one.\n\nHow it treats your data\n- Your ledger is visible to you and the assistants you connect. The database keeps every owner apart, and the operator cannot read ledgers.\n- Your email address is used to verify your account and reset your password; the service stores only a keyed hash of it, never the address.\n- Hosted in Stockholm, Sweden, with encrypted backups kept for 35 days. No cookies, no tracking, no ads.\n- Leave at any time and everything is deleted at once.",
+    "developerName": "Spendpoint",
+    "category": "Productivity",
+    "capabilities": [
+      "Record a receipt from a photo, every line, in its own currency",
+      "Catch likely duplicates before they are recorded",
+      "Amend or void an entry, keeping the original on record",
+      "Report spending by category, merchant or month",
+      "Export the whole ledger as JSON or CSV",
+      "Manage your own category list",
+      "See and disconnect connected assistants"
+    ],
+    "websiteURL": "https://spendpoint.ai",
+    "supportURL": "https://spendpoint.ai/support",
+    "privacyPolicyURL": "https://spendpoint.ai/privacy",
+    "termsOfServiceURL": "https://spendpoint.ai/terms",
+    "defaultPrompt": [
+      "Log this receipt in Spendpoint",
+      "How much did I spend on groceries this month?",
+      "Export my Spendpoint ledger as CSV"
+    ],
+    "brandColor": "#1d1d1f",
+    "brandColorDark": "#f5f5f7",
+    "composerIcon": "./icon.png",
+    "logo": "./icon.png"
+  }
+}

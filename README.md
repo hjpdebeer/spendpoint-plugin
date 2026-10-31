@@ -41,3 +41,7 @@ What the service does with your data is in the [privacy policy](https://spendpoi
 | `icon.png` | The icon, 512 pixels square. |
 
 This package is under the MIT licence. Use of the service is under its [terms](https://spendpoint.ai/terms). Support: support@spendpoint.ai.
+
+## The ChatGPT package
+
+`openai/` is the same package in the form OpenAI's plugin directory takes: its manifest in `.agent-plugin/plugin.json`, `.mcp.json` with the server and its OAuth block, and the skill and icon shared with the rest of this repository by link. It is zipped for upload with `cd openai && zip -r ../spendpoint-plugin.zip .agent-plugin .mcp.json icon.png skills`.

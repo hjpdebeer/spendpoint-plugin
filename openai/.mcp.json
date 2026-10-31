@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "spendpoint": {
+      "type": "streamable-http",
+      "url": "https://spendpoint.ai/mcp",
+      "extensions": {
+        "com.openai": {
+          "auth": {
+            "type": "oauth",
+            "client": { "mode": "dcr" },
+            "registrationUrl": "https://spendpoint.ai/register",
+            "authorizationUrl": "https://spendpoint.ai/authorize",
+            "tokenUrl": "https://spendpoint.ai/token",
+            "baseScopes": ["expenses:write", "expenses:read"]
+          }
+        }
+      }
+    }
+  }
+}
