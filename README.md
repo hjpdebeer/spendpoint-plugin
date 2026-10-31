@@ -2,7 +2,7 @@
 
 Receipts in, answers out. [Spendpoint](https://spendpoint.ai) is an expense ledger with no app of its own: you show a receipt to the assistant you already use, the assistant records it with every line in its own currency, and the sums you ask for come from the service, never from the assistant's arithmetic.
 
-This repository is the plugin package for Cursor and Grok Bot: the manifest, the connection to the hosted server, and the skill that tells the assistant how to record a receipt. It follows the [Agent Plugins](https://agent-plugins.org) standard. The service itself runs at spendpoint.ai; nothing runs on your machine.
+This repository is the plugin package for Cursor and Grok Bot: the manifest, the connection to the hosted server, and the skill that tells the assistant how to record a receipt. It follows the [Agent Plugins](https://agent-plugins.org) standard; `.cursor-plugin/plugin.json` repeats the manifest in the form the Cursor directory reads. The service itself runs at spendpoint.ai; nothing runs on your machine.
 
 ## Install
 

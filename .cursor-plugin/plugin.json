@@ -1,0 +1,16 @@
+{
+  "name": "spendpoint",
+  "displayName": "Spendpoint",
+  "version": "1.0.0",
+  "description": "Record receipts and ask what you spent. Spendpoint keeps an exact, private expense ledger through the assistant you already use.",
+  "author": {
+    "name": "Spendpoint",
+    "email": "support@spendpoint.ai",
+    "url": "https://spendpoint.ai"
+  },
+  "homepage": "https://spendpoint.ai",
+  "repository": "https://github.com/hjpdebeer/spendpoint-plugin",
+  "license": "MIT",
+  "keywords": ["expenses", "receipts", "budget", "ledger", "finance"],
+  "logo": "icon.png"
+}
